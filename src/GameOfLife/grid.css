@@ -1,0 +1,13 @@
+.gol__grid {
+	width: calc(90vw - 100px);
+	height: calc(90vw - 100px);
+	margin: 50px auto;
+	border: 1px solid grey;
+	display: flex;
+	flex-direction: column;
+}
+
+.gol__row {
+	display: flex;
+	flex-basis: 100%;
+}
