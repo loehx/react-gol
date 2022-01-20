@@ -1,0 +1,44 @@
+
+
+.gol__grid-wrapper {
+	padding-bottom: 100%;
+	position: relative;
+}
+
+.gol__control-bar {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 16px;
+	flex-wrap: wrap;
+}
+
+.gol__control-bar__panel {
+	margin: 0 10px 15px 10px;
+}
+
+.gol button {
+	background-color: transparent;
+    border: 0;
+    outline: none;
+	cursor: pointer;
+	color: black;
+	text-shadow: 0 0 5px 2px white;
+	transition: all .2s ease;
+	font-size: 16px;
+}
+
+.gol button:hover {
+	transform: scale(1.2);
+}
+
+.gol button:active {
+	transform: scale(.8);
+}
+
+.gol select {
+	height: 26px;
+    padding: 2px;
+    font-size: 14px;
+    margin-bottom: 4px;
+}

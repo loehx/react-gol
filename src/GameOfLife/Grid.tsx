@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState, useRef } from 'react';
 import './grid.css';
 import Cell from './Cell';
 
@@ -8,31 +7,32 @@ interface Props {
   cellClicked: (x: number, y: number) => void
 }
 
-interface State {
-  clickActive: boolean
-}
-
 export const Grid : React.FC<Props> = ({ rows, cellClicked }) => {
 
-  const [state, setState] = useState<State>({ clickActive: false })
-  let setClickActive = (e : MouseEvent) => setState({ clickActive: e.button === 0 });
-  let setClickInactive = (e : MouseEvent) => setState({ clickActive: state.clickActive && e.button === 0 })
+  const clickActiveRef = useRef(false);
 
   useEffect(() => {
-    document.addEventListener('mousedown', setClickActive);
-    document.addEventListener('mouseup', setClickInactive);
+    let onMouseDown = (e : MouseEvent) => {
+      if (e.button === 0) clickActiveRef.current = true;
+    }
+    let onMouseUp = (e : MouseEvent) => {
+      if (e.button === 0) clickActiveRef.current = false;
+    };
+
+    document.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('mouseup', onMouseUp);
     return () => {
-      document.removeEventListener('mousedown', setClickActive);
-      document.removeEventListener('mouseup', setClickInactive);
+      document.removeEventListener('mousedown', onMouseDown);
+      document.removeEventListener('mouseup', onMouseUp);
     }
   }, [])
-
+  
   return (
     <div className="gol__grid">
       { rows.map((row, y) => (
         <div key={ 'y' + y } className="gol__row">
           { row.map((active, x) => ( 
-            <Cell key={ y + '-' + x } active={ active } onMouseMove={ () => state.clickActive && cellClicked(x, y) }></Cell>
+            <Cell key={ x } active={ active } onMouseMove={ () => clickActiveRef.current && cellClicked(x, y) }></Cell>
           )) }
         </div>
       ))}

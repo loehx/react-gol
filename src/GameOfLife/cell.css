@@ -1,18 +1,14 @@
 
 
 .gol__cell {
-	background-color: wheat;
+	background-color: black;
 	margin: 0 0 1px 1px;
-	min-width: 5px;
+	
 	flex-basis: 100%;
-	outline: 1px solid transparent;
-	transition: all .1s ease-out;
+	
+	
 }
 
 .gol__cell--active {
 	background-color: white;
-	box-shadow: 5px 5px 0px rgba(0,0,0,.2);
-	outline: 1px solid black;
-	z-index: 1;
-	border-radius: 2px;
 }

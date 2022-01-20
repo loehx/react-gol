@@ -1,10 +1,12 @@
 .gol__grid {
-	width: calc(90vw - 100px);
-	height: calc(90vw - 100px);
-	margin: 50px auto;
-	border: 1px solid grey;
+	background-color: rgb(36, 36, 36);
 	display: flex;
 	flex-direction: column;
+	position: absolute;
+	left: 15px;
+	right: 15px;
+	top: 15px;
+	bottom: 15px;
 }
 
 .gol__row {
