@@ -3,12 +3,10 @@
 .gol__cell {
 	background-color: black;
 	margin: 0 0 1px 1px;
-	
 	flex-basis: 100%;
-	
-	
+	transition: all 50ms linear;
 }
 
 .gol__cell--active {
-	background-color: white;
+	background-color: white !important;
 }

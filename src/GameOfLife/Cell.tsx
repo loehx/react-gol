@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useRef } from 'react';
 import './cell.css';
 
 interface Props {
@@ -11,19 +10,27 @@ export const Cell : React.FC<Props> = ({ active, onMouseMove }) => {
   const activeCount = useRef(0);
 
   useEffect(() => {
-    activeCount.current = Math.min(510, activeCount.current + (active ? 50 : 0));
+    activeCount.current = activeCount.current + (active ? 20 : 0);
   }, [active])
+
+  const rgbCode = getHeatRgb(activeCount.current).join(',');
 
   return (
     <div 
       className={ active ? 'gol__cell gol__cell--active' : 'gol__cell' }
       onMouseMove={ onMouseMove }
       onClick={ onMouseMove }
-      style={ { backgroundColor: active ? undefined : `rgb(${activeCount.current - 100},${activeCount.current - 200},${Math.min(150, activeCount.current - 0)})` } }>
+      style={ { backgroundColor: `rgb(${rgbCode})` } }>
     </div>
   );
 }
 
+function getHeatRgb(n: number): Array<number> {
+  return minMaxColors([ n - 100, n - 200, Math.min(150, n) ])
+}
 
+function minMaxColors(nArray: number[]): number[] {
+  return nArray.map(n => Math.min(Math.max(0, n), 255));
+}
 
 export default Cell;

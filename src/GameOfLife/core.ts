@@ -48,18 +48,27 @@ export function doLifecycle(grid: boolean[][]): boolean[][] {
 	return newGrid;
 }
 
-export function randomSpawn(grid: boolean[][], activeQuota: number = .9) : boolean[][] {
+export function updateCell(grid: boolean[][], x: number, y: number) : boolean[][] {
+	const newRow = [...grid[y]];
+	if (newRow[x]) {
+		return grid;
+	}
+	newRow[x] = !newRow[x];
+	const newGrid = [...grid];
+	newGrid[y] = newRow;
+	return newGrid;
+}
+
+export function randomSpawn(grid: boolean[][], activeQuota: number = .8) : boolean[][] {
 	const size = grid.length;
 	const result = Array(size).fill(null).map(y => new Array(size).fill(false));
 	for(let y = 0; y < size; y++) {
 		for(let x = 0; x < size; x++) {
-			const current = grid[y][x];
-
 			result[y][x] = grid[y][x] || (Math.random() > activeQuota);
 		}
 	}
 
-	return Array(size).fill(null).map(y => new Array(size).fill(false).map(c => Math.random() > activeQuota));
+	return result;
 }
 
 export function loadPattern(name: string, padding: number, oldGrid?: boolean[][]): Promise<boolean[][]> {
@@ -68,7 +77,7 @@ export function loadPattern(name: string, padding: number, oldGrid?: boolean[][]
 		.then(r => r.text())
 		.then((txt) => {
 			console.log(txt);
-			const lines = txt.split('\n').filter(line => line[0] != '!');
+			const lines = txt.split('\n').filter(line => line[0] !== '!');
 			const matrix = lines.map((line: string) => line.split(''));
 			const width = Math.max(...matrix.map(r => r.length));
 			const height = matrix.length;

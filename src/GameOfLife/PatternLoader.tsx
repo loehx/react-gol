@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import { FaUpload } from 'react-icons/fa';
-import { loadPattern } from './core';
 
 const PATTERNS = [
 	'period48glidergun',
@@ -9,24 +8,18 @@ const PATTERNS = [
 ];
 
 interface Props {
-	onPatternLoaded: (grid: boolean[][]) => void,
-	currentGrid: boolean[][]
+	loadPattern: (name: string) => void
 }
 
-export const PatternLoader : FC<Props> = (props) => {
+export const PatternLoader : FC<Props> = ({ loadPattern }) => {
 
 	const [patternName, setPatternName] = useState<string>(PATTERNS[0])
 
-	const load = () => {
-		loadPattern(patternName, 30, props.currentGrid)
-			.then(props.onPatternLoaded);
-	}
-
 	return <>
 			<select onChange={ e => setPatternName(String(e.target.value)) }>
-				{ PATTERNS.map(p => <option value={ p }>{ p }</option>) }
+				{ PATTERNS.map(p => <option key={ p } value={ p }>{ p }</option>) }
 			</select>
-			<button onClick={ load } title="Load pattern"><FaUpload /></button>
+			<button onClick={ () => loadPattern(patternName) } title="Load pattern"><FaUpload /></button>
 		</>
 
 }
